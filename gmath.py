@@ -11,13 +11,18 @@ SPECULAR_EXP = 4
 #lighting functions
 def get_lighting(normal, view, ambient, light, areflect, dreflect, sreflect ):
     illu=[]
+    normalize(light[0])
+    normalize(normal)
+    normalize(view)
     ambient=calculate_ambient(ambient,areflect)
     diffuse=calculate_diffuse(light,dreflect,normal)
     specular=calculate_specular(light,sreflect,view,normal)
     for i in range(3):
-        illu.append(ambient[i]+diffuse[i]+specular[i])
+        #illu.append(ambient[i]+diffuse[i]+specular[i])
+        illu.append(ambient[i])
     limit_color(illu)
-    return [illu[0],illu[1],illu[2]]
+    #print "illu "+str(illu[0])+" "+str(illu[1])+" "+str(illu[2])
+    return illu
         
 def calculate_ambient(alight, areflect):
     toRet=[]
@@ -55,17 +60,16 @@ def calculate_specular(light, sreflect, view, normal):
     return toRet
 
 def limit_color(color):
-    if color[0]>255:
-        color[0]=255
-    if color[1]>255:
-        color[1]=255
-    if color[2]>255:
-        color[2]=255
+    for i in range(3):
+        if color[i]>255:
+            color[i]=255
+        elif color[i]<0:
+            color[i]=0
 
 #vector functions
 def normalize(vector):
     #print "v "+str(vector[0])
-    mag=math.sqrt(vector[0]**2+vector[1]**2+vector[2]**2)
+    mag=math.sqrt(vector[0]**2+vector[1]**2+vector[2]**2)+0.0
     vector[0]=vector[0]/mag
     vector[1]=vector[1]/mag
     vector[2]=vector[2]/mag
@@ -79,7 +83,7 @@ def subtract_vectors(a,b):
     for i in range(3):
         toRet.append(a[i]-b[i])
     return toRet
-    
+
 def calculate_normal(polygons, i):
 
     A = [0, 0, 0]
