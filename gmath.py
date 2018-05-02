@@ -20,27 +20,38 @@ def get_lighting(normal, view, ambient, light, areflect, dreflect, sreflect ):
     return [illu[0],illu[1],illu[2]]
         
 def calculate_ambient(alight, areflect):
-    return [alight[0]*areflect,alight[1]*areflect,alight[2]*areflect]
+    toRet=[]
+    for i in range(3):
+        toRet.append(alight[i]*areflect[i])
+    return toRet
 
 def calculate_diffuse(light, dreflect, normal):
     p=light[1] ##light color (r,g,b)
     normalize(normal)
-    normalize(light)
+    normalize(light[0])
     dotP=dot_product(normal,light[0])
     if dotP<0:
         dotP=0
-    return [p[0]*dreflect*dotP,p[1]*dreflect*dotP,p[2]*dreflect*dotP]
+    toRet=[]
+    for i in range(3):
+        #print "val "+str(p[i]*dreflect*dotP)
+        #print "a "+str(p[i]*dreflect[i]*dotP)
+        toRet.append(p[i]*dreflect[i]*dotP)
+    return toRet
 
 def calculate_specular(light, sreflect, view, normal):
     p=light[1]
     normalize(normal)
-    normalize(light)
+    normalize(light[0])
     normalize(view)
-    dot1=2*dot_product(normal,light)*normal-light
-    dot2=dot_product(dot1,view)
+    dot1=dot_product(normal,light[0])
+    prod1=2*dot1
+    normal2=[prod1*normal[0],prod1*normal[1],prod1*normal[2]]
+    prod3=subtract_vectors(normal2,light[0])
+    dot2=dot_product(prod3,view)
     toRet=[]
     for i in range(3):
-        toRet.append(p[i]*sreflect*(dot2**SPECULAR_EXP))
+        toRet.append(p[i]*sreflect[i]*(dot2**SPECULAR_EXP))
     return toRet
 
 def limit_color(color):
@@ -53,7 +64,8 @@ def limit_color(color):
 
 #vector functions
 def normalize(vector):
-    mag=Math.sqrt(a[0]**2+a[1]**2+a[2]**2)
+    #print "v "+str(vector[0])
+    mag=math.sqrt(vector[0]**2+vector[1]**2+vector[2]**2)
     vector[0]=vector[0]/mag
     vector[1]=vector[1]/mag
     vector[2]=vector[2]/mag
@@ -62,6 +74,12 @@ def dot_product(a, b):
     val=a[0]*b[0]+a[1]*b[1]+a[2]*b[2]
     return val
 
+def subtract_vectors(a,b):
+    toRet=[]
+    for i in range(3):
+        toRet.append(a[i]-b[i])
+    return toRet
+    
 def calculate_normal(polygons, i):
 
     A = [0, 0, 0]
