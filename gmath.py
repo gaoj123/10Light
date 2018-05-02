@@ -27,6 +27,8 @@ def calculate_diffuse(light, dreflect, normal):
     normalize(normal)
     normalize(light)
     dotP=dot_product(normal,light[0])
+    if dotP<0:
+        dotP=0
     return [p[0]*dreflect*dotP,p[1]*dreflect*dotP,p[2]*dreflect*dotP]
 
 def calculate_specular(light, sreflect, view, normal):
