@@ -44,4 +44,11 @@ edges = []
 polygons = []
 transform = new_matrix()
 
+light = [[0.5,
+          0.75,
+          1],
+         [240,
+          240,
+          240]]
+
 parse_file( 'microphone', edges, polygons, transform, screen, zbuffer, view, ambient, light, areflect, dreflect, sreflect)
