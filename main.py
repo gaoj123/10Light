@@ -36,3 +36,12 @@ polygons = []
 transform = new_matrix()
 
 parse_file( 'script', edges, polygons, transform, screen, zbuffer, view, ambient, light, areflect, dreflect, sreflect)
+
+screen = new_screen()
+zbuffer = new_zbuffer()
+color = [ 0, 0, 0 ]
+edges = []
+polygons = []
+transform = new_matrix()
+
+parse_file( 'microphone', edges, polygons, transform, screen, zbuffer, view, ambient, light, areflect, dreflect, sreflect)
