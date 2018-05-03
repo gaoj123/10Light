@@ -35,7 +35,8 @@ edges = []
 polygons = []
 transform = new_matrix()
 
-parse_file( 'script', edges, polygons, transform, screen, zbuffer, view, ambient, light, areflect, dreflect, sreflect)
+#runs Mr. DW's face script
+parse_file( 'face', edges, polygons, transform, screen, zbuffer, view, ambient, light, areflect, dreflect, sreflect)
 
 screen = new_screen()
 zbuffer = new_zbuffer()
