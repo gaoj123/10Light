@@ -18,8 +18,8 @@ def get_lighting(normal, view, ambient, light, areflect, dreflect, sreflect ):
     diffuse=calculate_diffuse(light,dreflect,normal)
     specular=calculate_specular(light,sreflect,view,normal)
     for i in range(3):
-        #illu.append(ambient[i]+diffuse[i]+specular[i])
-        illu.append(ambient[i])
+        illu.append(ambient[i]+diffuse[i]+specular[i])
+        #illu.append(ambient[i])
     limit_color(illu)
     #print "illu "+str(illu[0])+" "+str(illu[1])+" "+str(illu[2])
     return illu
@@ -27,7 +27,7 @@ def get_lighting(normal, view, ambient, light, areflect, dreflect, sreflect ):
 def calculate_ambient(alight, areflect):
     toRet=[]
     for i in range(3):
-        toRet.append(alight[i]*areflect[i])
+        toRet.append(int(alight[i]*areflect[i]))
     return toRet
 
 def calculate_diffuse(light, dreflect, normal):
@@ -41,7 +41,7 @@ def calculate_diffuse(light, dreflect, normal):
     for i in range(3):
         #print "val "+str(p[i]*dreflect*dotP)
         #print "a "+str(p[i]*dreflect[i]*dotP)
-        toRet.append(p[i]*dreflect[i]*dotP)
+        toRet.append(int(p[i]*dreflect[i]*dotP))
     return toRet
 
 def calculate_specular(light, sreflect, view, normal):
@@ -56,7 +56,7 @@ def calculate_specular(light, sreflect, view, normal):
     dot2=dot_product(prod3,view)
     toRet=[]
     for i in range(3):
-        toRet.append(p[i]*sreflect[i]*(dot2**SPECULAR_EXP))
+        toRet.append(int(p[i]*sreflect[i]*(dot2**SPECULAR_EXP)))
     return toRet
 
 def limit_color(color):
