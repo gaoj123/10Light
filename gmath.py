@@ -6,7 +6,7 @@ DIFFUSE = 1
 SPECULAR = 2
 LOCATION = 0
 COLOR = 1
-SPECULAR_EXP = 4
+SPECULAR_EXP = 3
 
 #lighting functions
 def get_lighting(normal, view, ambient, light, areflect, dreflect, sreflect ):
@@ -19,11 +19,9 @@ def get_lighting(normal, view, ambient, light, areflect, dreflect, sreflect ):
     specular=calculate_specular(light,sreflect,view,normal)
     for i in range(3):
         illu.append(ambient[i]+diffuse[i]+specular[i])
-        #illu.append(ambient[i])
     limit_color(illu)
-    #print "illu "+str(illu[0])+" "+str(illu[1])+" "+str(illu[2])
     return illu
-        
+ 
 def calculate_ambient(alight, areflect):
     toRet=[]
     for i in range(3):
@@ -68,7 +66,6 @@ def limit_color(color):
 
 #vector functions
 def normalize(vector):
-    #print "v "+str(vector[0])
     mag=math.sqrt(vector[0]**2+vector[1]**2+vector[2]**2)+0.0
     vector[0]=vector[0]/mag
     vector[1]=vector[1]/mag
